@@ -30,6 +30,7 @@ public class ProductService {
         ProductPlacedEvent productPlacedEvent = new ProductPlacedEvent(product.getName(), product.getDescription(), product.getPrice());
         log.info("Start - Sending ProductPlacedEvent {} to Kafka topic product-created", productPlacedEvent);
         kafkaTemplate.send("product-created", productPlacedEvent);
+        log.info("Product created successfully");
         return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice());
     }
 

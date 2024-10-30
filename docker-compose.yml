@@ -1,44 +1,58 @@
 version: '3'
 services:
   zookeeper:
-    image: wurstmeister/zookeeper:3.4.6
+    image: confluentinc/cp-zookeeper:latest
     ports:
       - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
 
   kafka:
-    image: wurstmeister/kafka:latest
+    image: confluentinc/cp-kafka:latest
     ports:
       - "9092:9092"
-    expose:
-      - "9093"
     environment:
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093,OUTSIDE://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui-microservice
+    ports:
+      - "8086:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "local"
+      KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS: "kafka:9092"
+      KAFKA_CLUSTERS_0_ZOOKEEPER: "zookeeper:2181"
     depends_on:
+      - kafka
       - zookeeper
 
   product-service:
-    build:
-      context: ./product-service
+    build: ./product-service
     ports:
-      - "7070:7070"
+      - "5051:5051"
     depends_on:
       - kafka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 
   order-service:
-    build:
-      context: ./order-service
+    build: ./order-service
     ports:
-      - "8080:8080"
+      - "5055:5055"
     depends_on:
       - kafka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 
   inventory-service:
-    build:
-      context: ./inventory-service
+    build: ./inventory-service
     ports:
-      - "9090:9090"
+      - "5056:5056"
     depends_on:
       - kafka
+    environment:
+        SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
