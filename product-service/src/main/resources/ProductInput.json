@@ -1,0 +1,62 @@
+[
+  {
+    "name": "lgPhone1",
+    "description": "smart phone",
+    "price": 100
+  },
+  {
+    "name": "lgPhone2",
+    "description": "smart phone",
+    "price": 200
+  },
+  {
+    "name": "lgPhone3",
+    "description": "smart phone",
+    "price": 300
+  },
+  {
+    "name": "lgPhone4",
+    "description": "smart phone",
+    "price": 400
+  },
+  {
+    "name": "lgPhone5",
+    "description": "smart phone",
+    "price": 500
+  },
+  {
+    "name": "lgPhone6",
+    "description": "smart phone",
+    "price": 600
+  },
+  {
+    "name": "lgPhone7",
+    "description": "smart phone",
+    "price": 700
+  },
+  {
+    "name": "lgPhone8",
+    "description": "smart phone",
+    "price": 800
+  },
+  {
+    "name": "lgPhone9",
+    "description": "smart phone",
+    "price": 900
+  },
+  {
+    "name": "lgPhone10",
+    "description": "smart phone",
+    "price": 1000
+  },
+  {
+    "name": "lgPhone10",
+    "description": "smart phone",
+    "price": 1000
+  },
+  {
+    "name": "lgPhone10",
+    "description": "smart phone",
+    "price": 1000
+  }
+]
